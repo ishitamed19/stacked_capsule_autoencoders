@@ -222,7 +222,7 @@ def main(arg=None):
 
 if __name__ == '__main__':
 	try:
-		st()
+		#st()
 		logging.set_verbosity(logging.INFO)
 		tf.app.run(main)
 	except Exception as err:  # pylint: disable=broad-except

@@ -26,6 +26,7 @@ from tensorflow import nest
 import tensorflow_datasets as tfds
 
 import os
+import pickle
 
 import ipdb
 st = ipdb.set_trace
@@ -117,7 +118,7 @@ def _create_mnist(subset, batch_size, **kwargs):
 			name='mnist', split=subset, **kwargs).repeat().batch(batch_size)
 	
 
-def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=False, rand_choice=False, do_argmax=False):
+def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=True, rand_choice=False, do_argmax=False):
 	text_file = open(os.path.join(directory, file_to_use), "r")
 	img_list = text_file.readlines()
 	count = len(img_list)
@@ -144,7 +145,7 @@ def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=False, r
 
 		# img = img.transpose(0, 2, 3, 1)
 
-		if first_only:
+		if True: #first_only:
 			img = data['rgb_camXs_raw'][0][...,:3]
 		elif rand_choice:
 			img = data['rgb_camXs_raw'][random.choice(range(40))][...,:3]
@@ -156,7 +157,7 @@ def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=False, r
 			only_one = True
 		else:
 			only_one = False
-		lbl = return_labels(data['tree_seq_filename'], only_one)
+		lbl = return_labels(data['tree_seq_filename'], True)
 		
 		# if do_argmax:
 		#   lbl = np.argmax(lbl)
@@ -182,7 +183,7 @@ def _create_clevr_veggies(subset, batch_size, first_only=True, rand_choice=False
 		rand_choice=rand_choice
 	)
 
-	if first_only or rand_choice:
+	if True: #first_only or rand_choice:
 		output_shapes = ((), (256, 256, 3), (20))
 	else:
 		output_shapes = ((), (40, 256, 256, 3), (20))

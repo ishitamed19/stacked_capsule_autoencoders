@@ -23,7 +23,7 @@ python -m stacked_capsule_autoencoders.train\
   --model=scae\
   --dataset=clevr_veggies\
   --max_train_steps=300000\
-  --batch_size=128\
+  --batch_size=64\
   --lr=3e-5\
   --num_of_classes=20\
   --use_lr_schedule=True\

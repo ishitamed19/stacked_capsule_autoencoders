@@ -31,8 +31,9 @@ def return_labels(tree_file_seq, only_one=False):
 	tree = pickle.load(open(os.path.join("/home/mprabhud/dataset/clevr_veggies",tree_file_seq),"rb"))
 	tree,boxes,_,all_classes = bbox_rearrange(tree,boxes=[],classes={},all_classes=[])
 	shapes_present = {class_val["shape"] for class_val  in all_classes}
-	if onle_one:
-		labels_present = [shapes_present]	
+	if only_one:
+		labels_present = [shapes_present]
+		return mlb.transform(labels_present)[0]
 	else:
 		labels_present = []
 		for i in range(40):
