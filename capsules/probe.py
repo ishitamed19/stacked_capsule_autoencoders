@@ -23,6 +23,9 @@ from __future__ import print_function
 import sonnet as snt
 import tensorflow as tf
 
+import ipdb
+st = ipdb.set_trace
+
 
 def classification_probe(features, labels, n_classes, labeled=None, multi=False):
 	"""Classification probe with stopped gradient on features."""
@@ -31,14 +34,13 @@ def classification_probe(features, labels, n_classes, labeled=None, multi=False)
 		logits = snt.Linear(n_classes)(tf.stop_gradient(features))
 
 		if multi:
-			# Labels is int32 [40, 20]
-			# Logits is [40, 20] float32
+			# Labels is int32 [20] # Logits is [20] float32
 			loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=tf.to_float(labels),logits=logits)
-			# CP is 40,20
+			loss       = tf.reduce_mean(loss)
 			correct_predictions = tf.equal(
 				tf.cast(tf.round(tf.nn.sigmoid(logits)), tf.int32),
 				tf.round(labels))
-			# ALT is 40
+			# ALT is 1
 			all_labels_true = tf.reduce_min(tf.cast(correct_predictions, tf.float32), 1)
 			# ACC is ()
 			acc = tf.reduce_mean(all_labels_true)
