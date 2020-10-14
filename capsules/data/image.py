@@ -25,6 +25,11 @@ import tensorflow as tf
 from tensorflow import nest
 import tensorflow_datasets as tfds
 
+import os
+
+import ipdb
+st = ipdb.set_trace
+
 
 from stacked_capsule_autoencoders.capsules.data import tfrecords as _tfrecords
 from stacked_capsule_autoencoders.capsules.data.nlu import return_labels
@@ -71,6 +76,7 @@ def create(which,
 
 
 	def clevr_veggies_map_func(index, image, label):
+		#st()
 		data = {'index': index, 'image': image, 'label': label}
 
 		if n_replicas > 1:
@@ -117,7 +123,7 @@ def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=False, r
 	count = len(img_list)
 
 	img_dir = os.path.join(directory,'bd_l')
-	
+	#st()
 
 	def _get_order():
 		if shuffle:
@@ -162,8 +168,8 @@ def _gen_clevr_veggies(directory,file_to_use, shuffle=False, first_only=False, r
 			i = 0
 
 
-def _create_clevr_veggies(subset, batch_size, first_only=False, rand_choice=False):
-	# imgs: [40, num_imgs, 3, 256, 256], lbsl: [num_imgs, 20] because multilabel.
+def _create_clevr_veggies(subset, batch_size, first_only=True, rand_choice=False):
+	#st() # imgs: [40, num_imgs, 3, 256, 256], lbsl: [num_imgs, 20] because multilabel.
 
 	if subset=='train':
 		file_to_use = 'bd_lt.txt'

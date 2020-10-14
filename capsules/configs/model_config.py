@@ -27,6 +27,7 @@ from stacked_capsule_autoencoders.capsules.models.scae import ImageAutoencoder
 from stacked_capsule_autoencoders.capsules.models.scae import ImageCapsule
 
 flags.DEFINE_float('lr', 1e-4, 'Learning rate.')
+flags.DEFINE_integer('num_of_classes', 10, 'Number of Classes')
 flags.DEFINE_boolean('use_lr_schedule', True, 'Uses learning rate schedule'
 										 ' if True.')
 
@@ -149,7 +150,7 @@ def make_scae(config):
 			decoder=obj_decoder,
 			input_key='image',
 			label_key='label',
-			n_classes=10,
+			n_classes=config.num_of_classes,
 			dynamic_l2_weight=10,
 			caps_ll_weight=1.,
 			vote_type='enc',
