@@ -36,11 +36,11 @@ from stacked_capsule_autoencoders.capsules.train import create_hooks
 from stacked_capsule_autoencoders.capsules.train import tools
 
 
-flags.DEFINE_string('dataset', 'mnist', 'Choose from: {mnist, constellation.}')
+flags.DEFINE_string('dataset', 'clevr_veggies', 'Choose from: {mnist, constellation.}')
 flags.DEFINE_string('model', 'scae', 'Choose from {scae, constellation}.')
 
 
-flags.DEFINE_string('name', None, '')
+flags.DEFINE_string('name', 'ishita_clevr', '')
 flags.mark_flag_as_required('name')
 
 flags.DEFINE_string('logdir', 'stacked_capsule_autoencoders/checkpoints/{name}',
@@ -190,6 +190,7 @@ def main(_=None):
       all_tensors = report_tensors + train_tensors
 
       while train_itr < config.max_train_steps:
+        # print('Doing train itr %d.' % train_itr)
 
         if train_itr % config.report_loss_steps == 0:
           report_vals, valid_report_vals, train_itr, _ = sess.run(all_tensors)
